@@ -22,11 +22,11 @@ body {
 }
 
 .delete{
-	padding-top: 5em;
+	padding-top: 1em;
 	color: white;
 }
 
-.button {
+.button, input[type=button]{
     border: 1px outset white;
     background-color: black;
     height:50px;
@@ -39,6 +39,19 @@ body {
    background-color: grey;
    color:white;
 }
+
+.eraser{
+	padding-top:3em;
+	padding-bottom: 2em;
+}
+
+
+
+input[type=button]:hover {
+	background-color: red;
+   color:white;
+}
+
 
 h1 {
 	color: white;

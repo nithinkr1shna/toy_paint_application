@@ -8,11 +8,20 @@
 <div class ="container">
 	<div class = "tools">
 		<button class ="button" onClick = "set_rect();">Rectangle</button>
-	    <button class ="button" onClick = "set_sqr();" style = "cursor : pointer;" cursor : hand;">square</button>
-	    <button class = "button" onClick = "set_circle();" style = "cursor: pointer;" cursor: hand;"> circle </button>
-	    <button class = "button" onClick = "set_pencil();" style = "cursor: pointer;" cursor: hand;"> pencil </button>
+	    <button class ="button" onClick = "set_sqr();" style = "cursor : pointer;" cursor : hand;">Square</button>
+	    <button class = "button" onClick = "set_circle();" style = "cursor: pointer;" cursor: hand;"> Circle </button>
+	    <button class = "button" onClick = "set_pencil();" style = "cursor: pointer;" cursor: hand;"> Pencil </button>
+	    <div class = "eraser">
+		    <button class = "button" onClick = "erase()">Eraser</button>
+		</div>
+	    <div class = "color-palette">
+	        <button class = "button" onClick = "set_color_red()">Red</button>
+	        <button class = "button" onClick = "set_color_black()">Black</button>
+	        <button class = "button" onClick = "set_color_blue()">Blue</button>
+	    </div>
 	    <div class = "delete">
-	        <input id = "clear" type = "button" value ="clear" onClick = "clear();" />
+	        <input id = "clear" type = "button" value ="clear" onClick = "clear();" /> 
+	        <!--<button  class = "button" onClick = "clear();">clear</button> -->
 	    </div>
 
 	</div>
