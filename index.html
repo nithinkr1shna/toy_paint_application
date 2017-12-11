@@ -1,0 +1,25 @@
+<html>
+<title> canvas ex </title>
+<head><h1>Paint </h1>
+
+<link rel = "stylesheet" href ="css/sample.css">
+</head>
+<body>
+<div class = "tools">
+	<button type ="button" onClick = "set_rect();">Rectangle</button>
+    <button type ="button" onClick = "set_sqr();" style = "cursor : pointer;" cursor : hand;">square</button>
+    <button type = "button" onClick = "set_circle();" style = "cursor: pointer;" cursor: hand;"> circle </button>
+    <button type = "button" onClick = "set_line();" style = "cursor: pointer;" cursor: hand;"> line </button>
+    <input id = "clear" type = "button" value ="clear" onClick = "clear();" />
+
+</div>
+
+
+<div class = "work-area">
+	<canvas id = "b" width = "800" height = "800"></canvas>
+</div>
+
+
+<script type = "text/javascript" src = "scripts/sample.js"></script>
+</body>
+</html>
