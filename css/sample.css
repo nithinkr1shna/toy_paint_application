@@ -1,13 +1,45 @@
 body {
-	background-color: white;
+	background-color: black;
 }
 
 .tools {
 	background-color: #b7b6b2;
     height : 3em;
+    width: 10px;
+    float: left;
+
 
 
 }
 .work-area {
 	background-color: #e8e1c0;
+	margin-left: 5em;
+}
+
+.container {
+	width: 100%;
+	overflow: hidden;
+}
+
+.delete{
+	padding-top: 5em;
+	color: white;
+}
+
+.button {
+    border: 1px outset white;
+    background-color: black;
+    height:50px;
+    width: 6em;
+    cursor:pointer;
+    color: white;
+}
+
+.button:hover {
+   background-color: grey;
+   color:white;
+}
+
+h1 {
+	color: white;
 }
