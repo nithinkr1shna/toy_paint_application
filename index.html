@@ -1,22 +1,26 @@
 <html>
 <title> canvas ex </title>
-<head><h1>Paint </h1>
+<head><h1>DrawME</h1>
 
 <link rel = "stylesheet" href ="css/sample.css">
 </head>
 <body>
-<div class = "tools">
-	<button type ="button" onClick = "set_rect();">Rectangle</button>
-    <button type ="button" onClick = "set_sqr();" style = "cursor : pointer;" cursor : hand;">square</button>
-    <button type = "button" onClick = "set_circle();" style = "cursor: pointer;" cursor: hand;"> circle </button>
-    <button type = "button" onClick = "set_line();" style = "cursor: pointer;" cursor: hand;"> line </button>
-    <input id = "clear" type = "button" value ="clear" onClick = "clear();" />
+<div class ="container">
+	<div class = "tools">
+		<button class ="button" onClick = "set_rect();">Rectangle</button>
+	    <button class ="button" onClick = "set_sqr();" style = "cursor : pointer;" cursor : hand;">square</button>
+	    <button class = "button" onClick = "set_circle();" style = "cursor: pointer;" cursor: hand;"> circle </button>
+	    <button class = "button" onClick = "set_pencil();" style = "cursor: pointer;" cursor: hand;"> pencil </button>
+	    <div class = "delete">
+	        <input id = "clear" type = "button" value ="clear" onClick = "clear();" />
+	    </div>
 
-</div>
+	</div>
 
 
-<div class = "work-area">
-	<canvas id = "b" width = "800" height = "800"></canvas>
+	<div class = "work-area">
+		<canvas id = "b" width = "1300" height = "550"></canvas>
+	</div>
 </div>
 
 
