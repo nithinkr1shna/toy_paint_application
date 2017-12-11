@@ -5,22 +5,24 @@ var startX;
 var startY;
 var mouseX;
 var mouseY;
+var curColor = "black";
 var startXArray = new Array();
 var startYArray = new Array();
 var widthArray = new Array();
 var heightArray = new Array();
+var pencilClickX = new Array();
+var pencilClickY = new Array();
+var pencilDrag = new Array();
 var modes = new Array();
 init();
 
 
 
-//listener for clear
+//Event listener for clear
 function init(){
-	var clr = document.getElementById("clear");
-	if(clr.addEventListener)
-		clr.addEventListener("click",clear,false);
-	else
-		cle.attachEvent('onClick',clear);
+  document.getElementById("clear").addEventListener("click",clear,false);
+	
+	
 }
 
 
@@ -37,6 +39,13 @@ if(!canvas){
 //setting mode as per selection
 //c hange this to some thig more convenient
 
+
+
+function set_color(colour){
+	console.log("color setting to", colour);
+	color = curColor;
+}
+
 function set_rect(){
 	    mode = "rectangle";
 }
@@ -51,6 +60,9 @@ function set_line(){
 function set_sqr(){
     mode= "square";
 }
+function set_pencil(){
+	mode = "pencil";
+}
 
 
 
@@ -62,6 +74,9 @@ function clear(){
 	widthArray.length =0;
 	heightArray.length =0;
 	modes.length = 0;
+	pencilClickX.length  =0;
+	pencilClickY.length =0;
+	pencilDrag.length = 0;
 	console.log("clear");
 }
 
@@ -76,6 +91,9 @@ canvas.onmousedown = function(e){
     //stores starting position 
     startXArray.push(startX);
     startYArray.push(startY);
+    if(mode == "pencil"){
+    	addClick(startX, startY);
+    }
 
 
     isDragging = true;
@@ -99,6 +117,10 @@ canvas.onmousemove = function(e){
 	if(isDragging){
 		mouseX = (e.pageX - this.offsetLeft)- startX;
 	    mouseY = (e.pageY - this.offsetTop) - startY;
+	    if(mode == "pencil"){
+	    	addClick(mouseX+startX, mouseY+startY, true);
+
+	    }
 	    ctx.clearRect(0,0, canvas.width, canvas.height);
 	    draw();
 
@@ -107,34 +129,34 @@ canvas.onmousemove = function(e){
 
 }
 
+
+function addClick(mouseX, mouseY, dragging){
+	pencilClickX.push(mouseX);
+	pencilClickY.push(mouseY);
+	pencilDrag.push(dragging);
+
+}
+
 function draw(){
 
 	switch(mode){
 		case "rectangle":
-		    console.log(startX, startY, mouseX, mouseY);
-		    ctx.beginPath();
-		    ctx.rect(startX, startY, mouseX, mouseY);
-		    ctx.stroke();
+		    drawRectangleOrSquare(startX, startY, mouseX, mouseY);
 		    break;
 
 		case "square":
-		    ctx.beginPath();
-		    ctx.rect(startX, startY, mouseX, mouseX);
-		    ctx.stroke();
+		    drawRectangleOrSquare(startX, startY, mouseX, mouseX);
 		    break;
 
 		case "circle":
-		    ctx.beginPath();
-		    ctx.arc(startX,startY,Math.abs(startX-mouseX),0, 2*Math.PI);  //context.arc(x,y,radius,sAngle,eAngle,counterclockwise);
-		    ctx.stroke();
+		    drawCircle(startX,startY,Math.abs(startX-mouseX));  //context.arc(x,y,radius,sAngle,eAngle,counterclockwise);
 		    break;
 
-		case "line":
-		    ctx.beginPath();
-		    ctx.moveTo(startX, startY);
-		    ctx.lineTo(mouseX, mouseY);
-		    ctx.stroke();
+
+		case "pencil" :
+		    drawPencil();
 		    break;
+
 	}
 }
 
@@ -146,35 +168,69 @@ function drawOldShapes(){
 		switch(modes[i]){
 
 			case "rectangle":
-			    console.log("rect");
-		        ctx.beginPath();
-		        ctx.rect(startXArray[i], startYArray[i], widthArray[i], heightArray[i]);
-		        ctx.stroke();
+			    
+		        drawRectangleOrSquare(startXArray[i], startYArray[i], widthArray[i], heightArray[i]);
 		        break;
 
 		    case "square":
-		        console.log("squareeee", mode);
-		        ctx.beginPath();
-		        ctx.rect(startXArray[i], startYArray[i],widthArray[i], widthArray[i]);
-		        ctx.stroke();
+		        drawRectangleOrSquare(startXArray[i], startYArray[i],widthArray[i], widthArray[i]);
 		        break;
 
 
 		    case "circle":
-		        console.log("circle");
-		        ctx.beginPath();
-		        ctx.arc(startXArray[i], startYArray[i], Math.abs(startXArray[i] -widthArray[i]), 0, 2*Math.PI);
-		        ctx.stroke();
+		        drawCircle(startXArray[i], startYArray[i], Math.abs(startXArray[i] -widthArray[i]));
 		        break;
 
 
-		    case "line":
-		        console.log("line", startXArray[i],startYArray[i], widthArray[i], heightArray[i]);
-		        ctx.beginPath();
-		        ctx.moveTo(startXArray[i], startYArray[i]);
-		        ctx.lineTo(widthArray[i], heightArray[i]);
-		        ctx.closePath();
+		    case "pencil":
+		        drawPencil();
 		        break;
+
+
+
+
 		}
 	}
+	
+
 }
+
+
+function drawCircle(x,y,radius){
+	console.log("circle");
+	ctx.beginPath();
+	ctx.arc(x,y,radius, 0, 2*Math.PI);
+	ctx.stroke();
+
+}
+
+
+function drawRectangleOrSquare(x, y, width, height){
+
+	console.log("rectangle");
+	ctx.beginPath();
+	ctx.rect(x,y, width, height);
+	ctx.stroke();
+}
+
+function drawPencil(){
+
+    console.log("pencil");
+
+    
+
+    for( var i=0; i<pencilClickX.length; i++){
+    	ctx.beginPath();
+    	if(pencilDrag[i] && i){
+    		ctx.moveTo(pencilClickX[i-1], pencilClickY[i-1]);
+    	}else{
+    		ctx.moveTo(pencilClickX[i] -1, pencilClickY[i] -1);
+    	}
+    	ctx.lineTo(pencilClickX[i], pencilClickY[i]);
+    	ctx.closePath();
+    	ctx.stroke();
+    }
+	    
+
+}
+
